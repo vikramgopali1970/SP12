@@ -104,6 +104,34 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
                 }
             }
         }
+        System.out.println();
+    }
+
+
+    private Vertex getMaxDistanceFromSource() {
+        Vertex maxDistanceVertex = g.getVertex(1);
+        for(Vertex u : g){
+            if(this.getDistance(u) > getDistance(maxDistanceVertex)){
+                maxDistanceVertex = u;
+            }
+        }
+        return maxDistanceVertex;
+    }
+
+
+    private int diameterOfTree(){
+        Vertex src = g.getVertex(1);
+        this.bfs(src);
+        Vertex maxDist = getMaxDistanceFromSource();
+        this.bfs(maxDist);
+        return getDistance(getMaxDistanceFromSource());
+    }
+
+
+
+    public static int diameterOfTree(Graph g){
+        BFSOO dt = new BFSOO(g);
+        return  dt.diameterOfTree();
     }
 
     // Run breadth-first search algorithm on g from source src
@@ -118,17 +146,19 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
     }
 
     public static void main(String[] args) throws Exception {
-        String string = "7 8   1 2 2   1 3 3   2 4 5   3 4 4   4 5 1   5 1 -7   6 7 -1   7 6 -1 1";
+        String string = "10 9  1 2 0    2 3 0   3 4 0   2 6 0   1 5 0   5 7 0   5 8 0   8 9 0   8 10 0  4";
         Scanner in;
         // If there is a command line argument, use it as file from which
         // input is read, otherwise use input from string.
         in = args.length > 0 ? new Scanner(new File(args[0])) : new Scanner(string);
         // Read graph from input
-        Graph g = Graph.readDirectedGraph(in);
+//        Graph g = Graph.readDirectedGraph(in);
+        Graph g = Graph.readGraph(in,false);
         int s = in.nextInt();
 
         // Call breadth-first search
         BFSOO b = breadthFirstSearch(g, s);
+
 
         g.printGraph(false);
 
@@ -140,6 +170,8 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
                 System.out.println(u + "\t" + b.getDistance(u) + "\t" + b.getParent(u));
             }
         }
+
+        System.out.println(diameterOfTree(g));
     }
 }
 
