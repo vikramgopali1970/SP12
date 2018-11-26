@@ -26,15 +26,7 @@ public class Diameter {
         return maxDistanceVertex;
     }
 
-    /**
-     * This method is used to calculate the diameter of the undirected acyclic graph which is the
-     * longest distance between 2 vertices.
-     *
-     * @return  returns the diameter of the undirected acyclic graph.
-     * */
-
-
-
+    
     /**
      * This is a static method to calculate the diameter of the undirected acyclic graph which is the
      * longest distance between 2 vertices.
