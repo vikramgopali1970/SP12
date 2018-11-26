@@ -62,6 +62,12 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
         get(u).distance = d;
     }
 
+    /**
+     * This method resets the data of the graph so that it can be used again for another call of the algorithm bfs. It
+     * does the initial setting up of values.
+     *
+     * @param src   It is a vertex which needs to be set as a source vertex
+     * */
     public void initialize(Vertex src) {
         for(Vertex u: g) {
             setSeen(u, false);
@@ -71,21 +77,43 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
         setDistance(src, 0);
     }
 
+    /**
+     * It is a setter method to set the source vertex.
+     *
+     * @param src   It is a vertex which needs to be set as a source vertex
+     * */
     public void setSource(Vertex src) {
         this.src = src;
     }
 
+    /**
+     * It is a getter method to get the source vertex.
+     *
+     * @return   It returns the value of source vertex
+     * */
     public Vertex getSource() {
         return this.src;
     }
 
     // Visit a node v from u
+    /**
+     * This method denotes that the vertex v is visited from u and sets this vertex v as visited
+     * and also sets its parent as u since it was visited from u.
+     *
+     * @param   u   It is the vertex whose neighbour is being visited.
+     * @param   v   It is the neighbour of u which is being visited.
+     * */
     void visit(Vertex u, Vertex v) {
         setSeen(v, true);
         setParent(v, u);
         setDistance(v, getDistance(u)+1);
     }
 
+    /**
+     * This method performs breadth first search for the given graph from  a specified source.
+     *
+     * @param   src   The source vertex from where the Breadth First Search will begin.
+     * */
     public void bfs(Vertex src) {
         setSource(src);
         initialize(src);
@@ -108,6 +136,12 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
     }
 
 
+    /**
+     * This is a helper method which will return a vertex which has the highest distance and if
+     * multiple vertices in the graph have maximum distance it returns the first vertex.
+     *
+     * @return  Vertex which has the highest distance
+     * */
     private Vertex getMaxDistanceFromSource() {
         Vertex maxDistanceVertex = g.getVertex(1);
         for(Vertex u : g){
@@ -118,7 +152,12 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
         return maxDistanceVertex;
     }
 
-
+    /**
+     * This method is used to calculate the diameter of the undirected acyclic graph which is the
+     * longest distance between 2 vertices.
+     *
+     * @return  returns the diameter of the undirected acyclic graph.
+     * */
     private int diameterOfTree(){
         Vertex src = g.getVertex(1);
         this.bfs(src);
@@ -128,19 +167,39 @@ public class BFSOO extends Graph.GraphAlgorithm<BFSOO.BFSVertex> {
     }
 
 
-
+    /**
+     * This is a static method to calculate the diameter of the undirected acyclic graph which is the
+     * longest distance between 2 vertices.
+     *
+     * @param g undirected acyclic graph whose diameter is to be calculated.
+     * @return  returns the diameter of the undirected acyclic graph.
+     * */
     public static int diameterOfTree(Graph g){
         BFSOO dt = new BFSOO(g);
         return  dt.diameterOfTree();
     }
 
-    // Run breadth-first search algorithm on g from source src
+    /**
+     * This is a static method to run the Breadth First search algorithm on a graph g with start vertex source.
+     *
+     * @param g undirected acyclic graph.
+     * @param src source vertex for running BFS.
+     * @return  BFSOO object with BFS run with specified vertex as start vertex.
+     * */
     public static BFSOO breadthFirstSearch(Graph g, Vertex src) {
         BFSOO b = new BFSOO(g);
         b.bfs(src);
         return b;
     }
 
+
+    /**
+     * This is a static method to run the Breadth First search algorithm on a graph g with start vertex index.
+     *
+     * @param g undirected acyclic graph .
+     * @param s index of source vertex for running BFS.
+     * @return  BFSOO object with BFS run with specified vertex index as start vertex.
+     * */
     public static BFSOO breadthFirstSearch(Graph g, int s) {
         return breadthFirstSearch(g, g.getVertex(s));
     }
